@@ -4,7 +4,7 @@ import { isAddress} from 'viem'
 const DECIMALS = 1000000000000000000;
 
 export default class PriceFetcherV1Service {
-    async execute(baseAsset: `0x${string}`, quoteAsset: `0x${string}`): Promise<number> {
+    async execute(baseAsset: `0x${string}`, quoteAsset: `0x${string}`, binStep: number): Promise<number> {
         if (!isAddress(baseAsset) || !isAddress(quoteAsset)) {
             throw new Error()
         }
