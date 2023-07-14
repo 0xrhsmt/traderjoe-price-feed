@@ -6,8 +6,6 @@ export const errorRequestHandler: ErrorRequestHandler = (err: Error, _req: expre
   const [status, message] =
     err instanceof HttpError ? [err.statusCode, err.message] : [statusCode.INTERNAL_SERVER_ERROR, 'Internal server error'];
 
-  console.error(err);
-
   res.status(status).json({ error: { message } });
 }
 
