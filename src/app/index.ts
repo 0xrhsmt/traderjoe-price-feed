@@ -2,6 +2,7 @@ import express, { ErrorRequestHandler, Express, NextFunction, RequestHandler } f
 import PriceFetcherV1Service from '../services/priceFetchers/v1';
 import { errorRequestHandler } from './exceptions';
 import PriceFetcherV2Service from '@/services/priceFetchers/v2';
+import PriceFetcherV2_1Service from '@/services/priceFetchers/v2_1';
 
 const app: express.Express = express()
 app.use(express.json())
@@ -52,6 +53,24 @@ const fetchPriceV2 = async (base: `0x${string}`, quote: `0x${string}`, binStep: 
     PRICE_CACHE_V2[base] = PRICE_CACHE_V2[base] || {};
     PRICE_CACHE_V2[base][quote] = PRICE_CACHE_V2[base][quote] || {};
     PRICE_CACHE_V2[base][quote][binStep] = { value: price, cachedAt: new Date() };
+
+    return price;
+}
+const fetchPriceV2_1 = async (base: `0x${string}`, quote: `0x${string}`, binStep: number): Promise<number> => {
+    base = base.toLowerCase() as `0x${string}`;
+    quote = quote.toLowerCase() as `0x${string}`;
+
+    const cached = PRICE_CACHE_V2_1[base]?.[quote]?.[binStep]?.cachedAt?.getTime() > Date.now() - CACHE_EXPIRY;
+    if (cached) {
+        return PRICE_CACHE_V2_1[base][quote][binStep].value;
+    }
+
+    const service = new PriceFetcherV2_1Service();
+    const price = await service.execute(base, quote, binStep);
+
+    PRICE_CACHE_V2_1[base] = PRICE_CACHE_V2_1[base] || {};
+    PRICE_CACHE_V2_1[base][quote] = PRICE_CACHE_V2_1[base][quote] || {};
+    PRICE_CACHE_V2_1[base][quote][binStep] = { value: price, cachedAt: new Date() };
 
     return price;
 }
@@ -108,6 +127,34 @@ app.post('/v2/batch-prices', wrapAsync(async (req: express.Request, res: express
         prices.map((price) => ({ price }))
     ));
 }))
+
+app.get('/v2_1/prices/:base/:quote/:binstep', wrapAsync(async (req: express.Request, res: express.Response) => {
+    const base = req.params.base as `0x${string}`;
+    const quote = req.params.quote as `0x${string}`;
+    const binstep = parseInt(req.params.binstep, 10) as number;
+
+    // TODO: Validate base and quote params
+
+    const price = await fetchPriceV2_1(base, quote, binstep);
+
+    res.send(JSON.stringify({
+        price: price,
+    }))
+}))
+
+app.post('/v2_1/batch-prices', wrapAsync(async (req: express.Request, res: express.Response) => {
+    // TODO: Validate body
+    const assets = req.body;
+
+    const prices = await Promise.all(
+        assets.map(async (asset: { base_asset: `0x${string}`, quote_asset: `0x${string}`, bin_step: number }) => fetchPriceV2_1(asset.base_asset, asset.quote_asset, asset.bin_step))
+    )
+
+    res.send(JSON.stringify(
+        prices.map((price) => ({ price }))
+    ));
+}))
+
 
 app.use(errorRequestHandler);
 

@@ -32,4 +32,15 @@ describe("Test the root path", () => {
         });
     })
 
+    describe('v2_1', () => {
+        it("It should response the GET method", async () => {
+            const response = await request(app).get(`/v2_1/prices/${WETH}/${USDC}/15`);
+            expect(response.statusCode).toBe(200);
+        });
+
+        it("It should error response", async () => {
+            const response = await request(app).get(`/v2_1/prices/0x/0x/0`);
+            expect(response.statusCode).toBe(500);
+        });
+    })
 });
