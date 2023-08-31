@@ -368,21 +368,21 @@ Returned this error when the requested Liquidity Book Pair Contract does not exi
 
 - Minimize network requests
   - [Calculate Pair addresses on the local side](https://github.com/0xrhsmt/traderjoe-price-feed/blob/1c221a9cfd3642996e35efc960057cdf5d1a1acc/src/entities/v1/Pair.ts#L6-L25)
-  - Use [batch JSON-RPC requests](https://github.com/0xrhsmt/traderjoe-price-feed/blob/1c221a9cfd3642996e35efc960057cdf5d1a1acc/src/config/chainClient.ts#L14-L15)
-  - [Maximizing Cache Utilization](https://github.com/search?q=repo%3A0xrhsmt%2Ftraderjoe-price-feed%20withCache&type=code)
+  - [Use batch JSON-RPC requests](https://github.com/0xrhsmt/traderjoe-price-feed/blob/1c221a9cfd3642996e35efc960057cdf5d1a1acc/src/config/chainClient.ts#L14-L15)
+  - [Cache as much as possible](https://github.com/search?q=repo%3A0xrhsmt%2Ftraderjoe-price-feed%20withCache&type=code)
 - Avoid reinventing the wheel
-  - Refer extensively to Trader JOE SDKs
+  - Refer extensively to [Trader JOE SDKs](https://docs.traderjoexyz.com/)
 
 ### Cache
 
-- Price information is cached until a new block is generated. [This cache expiration varies per chain](https://github.com/0xrhsmt/traderjoe-price-feed/blob/1c221a9cfd3642996e35efc960057cdf5d1a1acc/src/config/cache.ts#L6-L22).
-- Immutable information in Token and Pair details is cached. This cache has no expiration.
+- Pair Asset Price information is cached until a new block is generated. [This cache expiration varies per chain](https://github.com/0xrhsmt/traderjoe-price-feed/blob/1c221a9cfd3642996e35efc960057cdf5d1a1acc/src/config/cache.ts#L6-L22).
+- Immutable information in Token and Pair details is cached. This cache has no expiration. (ex. Token's decimals, Pair's token0/token1 addresses, etc...)
 
 ### Other Features
 
-- Request rate limiting
-- Timeout limiting
-- Beauty logging using pino-logger
+- [Request rate limiting](https://github.com/0xrhsmt/traderjoe-price-feed/blob/64bab9b867e462e6d1622a023810ec5bc74c8e13/src/middlewares/rateLimiter.ts#L1)
+- [Request Timeout limiting](https://github.com/0xrhsmt/traderjoe-price-feed/blob/64bab9b867e462e6d1622a023810ec5bc74c8e13/src/middlewares/timeout.ts#L1)
+- [Beauty logging using pino-logger](https://github.com/0xrhsmt/traderjoe-price-feed/blob/64bab9b867e462e6d1622a023810ec5bc74c8e13/src/middlewares/httpLogger.ts#L16)
 
 ## Development and Production Environments
 
@@ -394,7 +394,7 @@ Returned this error when the requested Liquidity Book Pair Contract does not exi
 
 ### Development Environment
 
-#### Local Launch
+#### Start local server
 
 ```bash
 $cp .env.development.example .env.development.local
@@ -413,7 +413,7 @@ $curl --location 'localhost:3000/v1/batch-prices' \
 
 #### Testing
 
-Testing needs an Avalanche mainnet "archive" node to fork from. <br>
+Testing needs an Avalanche mainnet "archive" node and anvil to fetch the same on-chain data for test. <br>
 
 ```bash
 $cp .env.test.example .env.test.local
@@ -429,7 +429,7 @@ $pnpm run test:watch
 
 ### Production
 
-#### Build & Launch
+#### Build & Launch Server
 
 ```bash
 $pnpm install
