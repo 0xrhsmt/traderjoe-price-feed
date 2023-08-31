@@ -427,7 +427,7 @@ $pnpm run test
 $pnpm run test:watch
 ```
 
-##### Load Testing (Local 😭)
+#### Load Testing (Locally 😭)
 
 [install k6](https://k6.io/docs/get-started/installation/)
 
