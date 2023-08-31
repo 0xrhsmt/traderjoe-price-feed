@@ -1,26 +1,24 @@
 import { ChainId } from '@traderjoe-xyz/sdk-core';
-import { parseEnvToInt } from '../utils/index.js';
 import { CHAIN } from './chain.js';
 
-const getDefaultBlockIntervalCache = () => {
-  let blockAverageTime = 0;
+const BLOCK_INTERVAL_MULTIPLIER = 0.75;
+
+const getBlockIntervalAverage = () => {
   switch (CHAIN.id) {
     // ref: https://arbiscan.io/chart/blocktime
     case ChainId.ARBITRUM_ONE:
-      blockAverageTime = 260;
-      break;
+      return 260;
+
     // ref: https://snowtrace.io/chart/blocktime
     case ChainId.AVALANCHE:
-      blockAverageTime = 2000;
-      break;
+      return 2000;
+
     // ref: https://bscscan.com/chart/blocktime
     case ChainId.BNB_CHAIN:
-      blockAverageTime = 3000;
-      break;
+      return 3000;
+    default:
+      return 0;
   }
-
-  return blockAverageTime * 0.9;
 };
-export const BLOCK_INTERVAL_CACHE_TIME: number = parseEnvToInt('BLOCK_INTERVAL_CACHE_TIME', {
-  default: getDefaultBlockIntervalCache(),
-});
+export const BLOCK_INTERVAL_CACHE_TIME: number =
+  getBlockIntervalAverage() * BLOCK_INTERVAL_MULTIPLIER;

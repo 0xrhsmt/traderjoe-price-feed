@@ -7,10 +7,10 @@
     "prepare": "husky install",
     "prebuild": "rimraf dist",
     "build": "tsc",
-    "start:dev": "nodemon -r dotenv/config --esm src/index.ts",
-    "test": "ANVIL_MODE=true LOG_LEVEL=silent jest",
-    "test:watch": "ANVIL_MODE=true LOG_LEVEL=silent jest --watch",
-    "anvil": "dotenv -- bash -c 'anvil --fork-url \"$JSON_RPC_URL\" --chain-id \"$CHAIN_ID\"'"
+    "start:dev": "dotenv -c development -- pnpm exec nodemon -r dotenv/config --esm src/index.ts | pnpm exec pino-pretty",
+    "test": "dotenv -c test jest",
+    "test:watch": "dotenv -c test jest --watch",
+    "test:anvil": "dotenv -c test -- bash -c 'anvil --fork-url \"$ANVIL_FORK_URL\" --chain-id \"$CHAIN_ID\" --fork-block-number \"$ANVIL_FORK_BLOCK_NUMBER\"'"
   },
   "keywords": [],
   "author": "",
@@ -32,6 +32,7 @@
     "jest": "^29.6.4",
     "lint-staged": "^13.2.3",
     "nodemon": "^3.0.1",
+    "pino-pretty": "^10.2.0",
     "prettier": "3.0.1",
     "rimraf": "^5.0.1",
     "supertest": "^6.3.3",
