@@ -7,8 +7,8 @@ export enum ClientErrorCodes {
   RequestTimeoutError = 102,
   TooManyRequestsError = 103,
   PairNoLiquidityError = 104,
-  FetchTokenInfoError = 105,
-  PairTokenInfoError = 106,
+  TokenInfoFetchError = 105,
+  PairInfoFetchError = 106,
 }
 
 export abstract class BaseError extends Error {
@@ -55,7 +55,7 @@ export class PairNoLiquidityError extends BaseClientError {
 }
 export class TokenInfoFetchError extends BaseClientError {
   public statusCode = StatusCodes.BAD_REQUEST;
-  public errorCode = ClientErrorCodes.FetchTokenInfoError;
+  public errorCode = ClientErrorCodes.TokenInfoFetchError;
 
   constructor(message?: string, options?: ErrorOptions) {
     super(
@@ -66,7 +66,7 @@ export class TokenInfoFetchError extends BaseClientError {
 }
 export class PairInfoFetchError extends BaseClientError {
   public statusCode = StatusCodes.BAD_REQUEST;
-  public errorCode = ClientErrorCodes.PairTokenInfoError;
+  public errorCode = ClientErrorCodes.PairInfoFetchError;
 
   constructor(message?: string, options?: ErrorOptions) {
     super(
