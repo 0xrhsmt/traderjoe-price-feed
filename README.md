@@ -398,7 +398,7 @@ Returned this error when the requested Liquidity Book Pair Contract does not exi
 
 ```bash
 $cp .env.development.example .env.development.local
-# And Replace $JSON_RPC_URL value with your own Avalanche node URL
+# And replace $JSON_RPC_URL value if you want to use your own Avalanche mainnet node.
 
 $pnpm install
 
@@ -413,9 +413,11 @@ $curl --location 'localhost:3000/v1/batch-prices' \
 
 #### Testing
 
+Testing needs an Avalanche mainnet "archive" node to fork from. <br>
+
 ```bash
 $cp .env.test.example .env.test.local
-# And Replace $ANVIL_FORK_URL value with your own Avalanche "archive" node URL
+# And you must replace $ANVIL_FORK_URL value with your own Avalanche "archive" node URL. (ex. https://avalanche-mainnet.infura.io/v3/xxxx)
 
 $pnpm install
 
