@@ -8,6 +8,20 @@ export const avalanche = {
     'Wrapped AVAX',
     'WAVAX',
   ),
+  sAVAX: new Token(
+    ChainId.AVALANCHE,
+    '0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE',
+    18,
+    'Staked AVAX',
+    'sAVAX',
+  ),
+  BTCb: new Token(
+    ChainId.AVALANCHE,
+    '0x152b9d0FdC40C096757F570A51E494bd4b943E50',
+    8,
+    'Bitcoin',
+    'BTC.b',
+  ),
   USDC: new Token(
     ChainId.AVALANCHE,
     '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',

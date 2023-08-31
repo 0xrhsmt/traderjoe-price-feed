@@ -8,8 +8,8 @@
     "prebuild": "rimraf dist",
     "build": "tsc",
     "start:dev": "dotenv -c development -- pnpm exec nodemon -r dotenv/config --esm src/index.ts | pnpm exec pino-pretty",
-    "test": "dotenv -c test jest",
-    "test:watch": "dotenv -c test jest --watch",
+    "test": "dotenv -c test -- bash -c 'jest'",
+    "test:watch": "dotenv -c test -- bash -c 'jest --watch'",
     "test:anvil": "dotenv -c test -- bash -c 'anvil --fork-url \"$ANVIL_FORK_URL\" --chain-id \"$CHAIN_ID\" --fork-block-number \"$ANVIL_FORK_BLOCK_NUMBER\"'"
   },
   "keywords": [],

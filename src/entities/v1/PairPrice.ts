@@ -19,11 +19,11 @@ export class PairPrice {
       return 0;
     }
 
-    return (
-      Number(
-        (quoteReserve * 10n ** BigInt(this.baseToken.decimals) * BigInt(Number.MAX_SAFE_INTEGER)) /
-          (baseReserve * 10n ** BigInt(this.quoteToken.decimals)),
-      ) / Number.MAX_SAFE_INTEGER
-    );
+    const numerator = quoteReserve * 10n ** BigInt(this.baseToken.decimals);
+    const denominator = baseReserve * 10n ** BigInt(this.quoteToken.decimals);
+    const price =
+      Number((numerator * BigInt(Number.MAX_SAFE_INTEGER)) / denominator) / Number.MAX_SAFE_INTEGER;
+
+    return price;
   }
 }
