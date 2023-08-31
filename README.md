@@ -427,6 +427,26 @@ $pnpm run test
 $pnpm run test:watch
 ```
 
+##### Load Testing (Local 😭)
+
+[install k6](https://k6.io/docs/get-started/installation/)
+
+```bash
+$cp .env.development.example .env
+# And replace $JSON_RPC_URL value if you want to use your own Avalanche mainnet node.
+
+$pnpm install
+$pnpm build
+
+$LOG_LEVEL=silent API_RATE_LIMIT_SKIP=true node dist/src/index.js
+
+$k6 run -e WORKLOAD=smoke ./test/k6-scripts/main.js
+$k6 run -e WORKLOAD=breaking ./test/k6-scripts/main.js
+$k6 run -e WORKLOAD=spike ./test/k6-scripts/main.js
+```
+
+<img alt="layered lifegame" src="./docs/assets/loadtest-smoke.png" width=600>
+
 ### Production
 
 #### Build & Launch Server

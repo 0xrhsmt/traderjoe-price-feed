@@ -11,7 +11,7 @@ export const httpLogger = pinoHttp({
     } else if (res.statusCode >= 500 || error) {
       return 'error';
     }
-    return 'info';
+    return 'debug';
   },
 });
 
