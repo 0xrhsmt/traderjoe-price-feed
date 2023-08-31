@@ -400,7 +400,15 @@ Returned this error when the requested Liquidity Book Pair Contract does not exi
 $cp .env.development.example .env.development.local
 # And Replace $JSON_RPC_URL value with your own Avalanche node URL
 
+$pnpm install
+
 $pnpm run start:dev
+
+$curl --location 'localhost:3000/v1/prices/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E' \
+--header 'Content-Type: application/json'
+$curl --location 'localhost:3000/v1/batch-prices' \
+--header 'Content-Type: application/json' \
+--data '["0xf4003F4efbe8691B60249E6afBd307ABe7758ADb"]'
 ```
 
 #### Testing
@@ -408,6 +416,8 @@ $pnpm run start:dev
 ```bash
 $cp .env.test.example .env.test.local
 # And Replace $ANVIL_FORK_URL value with your own Avalanche "archive" node URL
+
+$pnpm install
 
 $pnpm run test:anvil
 $pnpm run test
@@ -419,6 +429,8 @@ $pnpm run test:watch
 #### Build & Launch
 
 ```bash
+$pnpm install
+
 $pnpm run build
 $node dist/src/index.js | pnpm exec pino-pretty
 ```
