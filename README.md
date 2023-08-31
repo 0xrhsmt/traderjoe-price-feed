@@ -375,8 +375,8 @@ Returned this error when the requested Liquidity Book Pair Contract does not exi
 
 ### Cache
 
-- Price information is cached until a new block is generated. [Cache expiration varies per chain](https://github.com/0xrhsmt/traderjoe-price-feed/blob/1c221a9cfd3642996e35efc960057cdf5d1a1acc/src/config/cache.ts#L6-L22).
-- Immutable information in Token and Pair details is cached. Cache has no expiration.
+- Price information is cached until a new block is generated. [This cache expiration varies per chain](https://github.com/0xrhsmt/traderjoe-price-feed/blob/1c221a9cfd3642996e35efc960057cdf5d1a1acc/src/config/cache.ts#L6-L22).
+- Immutable information in Token and Pair details is cached. This cache has no expiration.
 
 ### Other Features
 
@@ -417,7 +417,8 @@ Testing needs an Avalanche mainnet "archive" node to fork from. <br>
 
 ```bash
 $cp .env.test.example .env.test.local
-# And you must replace $ANVIL_FORK_URL value with your own Avalanche "archive" node URL. (ex. https://avalanche-mainnet.infura.io/v3/xxxx)
+# And you must replace $ANVIL_FORK_URL value with your own Avalanche "archive" node URL.
+# (ex. https://avalanche-mainnet.infura.io/v3/xxxx)
 
 $pnpm install
 
